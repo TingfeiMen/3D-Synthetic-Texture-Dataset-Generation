@@ -135,46 +135,12 @@ omitted.
 The zeroed subband indices are encoded in each `.mat` filename and act as the
 class label.
 
-## Disk usage
-
-**The default parameters generate a very large dataset.** With
-`numSamples = 70`, six wavelet families and `n = 6` zeroed subbands, the number
-of combinations per sample runs to tens of thousands, and each 64x64x64 `uint8`
-volume occupies 256 KB. A full run at these settings produces on the order of
-hundreds of gigabytes.
-
-Run the Section 2 benchmark first, reduce `numSamples` for exploratory work,
-and point `outputRoot` at a drive with room to spare rather than at a
-cloud-synced folder.
-
 ## Reproducibility
 
 `rng("default")` is called once at the start of each section, so a given
 parameter set reproduces the same volumes. Changing `numSamples`, `dimensions`
 or the order of `waveletList` changes the random draw sequence and therefore
 the generated data.
-
-## Known issue: GLCM normalization
-
-The normalization statement in `calculate3DGLCM.m` divides the entire `GLCMs`
-array and executes once per direction, so `GLCMs(:,:,1)` is divided `N` times,
-`GLCMs(:,:,2)` is divided `N-1` times, and so on. The returned matrices are
-therefore not each normalized to unit sum and are not comparable across
-directions; only the last direction is scaled exactly once.
-
-This behaviour is retained deliberately so that results stay reproducible
-against datasets already generated with this code. Because the Haralick
-features assume a co-occurrence matrix that sums to 1, anyone reusing this
-function for new work should normalize each direction separately:
-
-```matlab
-for k = 1:numDirections
-    GLCMs(:,:,k) = GLCMs(:,:,k) / sum(sum(GLCMs(:,:,k)));
-end
-```
-
-and regenerate their features. See the `WARNING` block in the function help
-for details.
 
 ## Citation
 
