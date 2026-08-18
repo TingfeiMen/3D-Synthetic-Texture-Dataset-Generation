@@ -1,0 +1,8 @@
+# MATLAB sources: normalize line endings in the repository
+*.m       text eol=lf
+*.md      text eol=lf
+LICENSE   text eol=lf
+
+# Dataset files: keep bytes exactly as generated, no line-ending conversion
+*.mat     binary
+*.csv     -text

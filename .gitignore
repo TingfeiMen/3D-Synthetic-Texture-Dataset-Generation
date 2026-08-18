@@ -4,6 +4,10 @@ TestData_*/
 *.mat
 *.csv
 
+# ...but the curated sample set is tracked
+!/Dataset examples/**/*.mat
+!/Dataset examples/**/*.csv
+
 # MATLAB autosave and build artifacts
 *.asv
 *.m~

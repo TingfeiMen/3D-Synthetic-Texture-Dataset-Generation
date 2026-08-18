@@ -135,6 +135,43 @@ omitted.
 The zeroed subband indices are encoded in each `.mat` filename and act as the
 class label.
 
+## Dataset examples
+
+The `Dataset examples/` folder holds a small curated sample of the generated
+dataset, so the data format can be inspected without regenerating anything.
+It is a subset, not the full dataset.
+
+```
+Dataset examples/
+  Wname_<wavelet>/                       db1, db2, db3, coif1, sym4, fk4
+    FeatureData/
+      ReconstructedData_1.csv            complete feature tables, all classes
+      ...
+      ReconstructedData_7.csv
+    ReconstructedData/
+      ReconstructedData_1/
+        Sample_<wavelet>_Var10_<zeroedSubbands>.mat    10 sample volumes
+```
+
+For each of the six wavelet families:
+
+- **All seven feature CSVs are included and complete.** Each file corresponds
+  to one noise realization and holds one row per texture class, with the 13
+  Haralick features in the order listed above. Nothing is truncated.
+- **Ten sample volumes** are included from the first noise realization, taken
+  at even intervals through the sorted class list so they span a range of
+  subband combinations rather than clustering together.
+
+Each `.mat` file stores a single variable `sampleData`, a 64x64x64 `uint8`
+array. The zeroed subband indices are encoded in the filename and act as the
+class label. To load one:
+
+```matlab
+S = load('Dataset examples/Wname_coif1/ReconstructedData/ReconstructedData_1/Sample_coif1_Var10_1_10_11_12_13_14.mat');
+vol = S.sampleData;          % 64x64x64 uint8
+volshow(vol);
+```
+
 ## Reproducibility
 
 `rng("default")` is called once at the start of each section, so a given
