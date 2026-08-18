@@ -1,0 +1,17 @@
+# Generated dataset - never commit, this runs to hundreds of gigabytes
+data/
+TestData_*/
+*.mat
+*.csv
+
+# MATLAB autosave and build artifacts
+*.asv
+*.m~
+*.mex*
+slprj/
+codegen/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
